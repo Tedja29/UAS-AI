@@ -1,28 +1,74 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f9fc;
+  color: #333;
   padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 15px;
+  color: #2a2a2a;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #357ab7;
 }
 
 #maze {
   display: grid;
-  margin-top: 20px;
+  margin: 20px auto;
+  width: max-content;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .cell {
   width: 30px;
   height: 30px;
-  background-color: #eee;
-  border: 1px solid #ccc;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .wall {
-  background-color: black;
+  background-color: #2d3436;
 }
 
 .player {
-  background-color: green;
+  background-color: #00b894;
+  animation: pulse 0.4s infinite alternate;
 }
 
 .hint {
-  background-color: yellow;
+  background-color: #ffeaa7;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+@media (max-width: 600px) {
+  .cell {
+    width: 24px;
+    height: 24px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
 }
