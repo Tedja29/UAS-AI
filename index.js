@@ -94,6 +94,24 @@ function bfs(startX, startY, endX, endY) {
     }
   }
 
+  function autoSolve() {
+  hintPath = bfs(playerX, playerY, goalX, goalY);
+  let index = 0;
+
+  const interval = setInterval(() => {
+    if (index >= hintPath.length) {
+      clearInterval(interval);
+      return;
+    }
+    const [x, y] = hintPath[index];
+    playerX = x;
+    playerY = y;
+    drawMaze();
+    index++;
+  }, 300);
+}
+
+
   const path = [];
   let curr = [endX, endY];
   while (curr && !(curr[0] === startX && curr[1] === startY)) {
