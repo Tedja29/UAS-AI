@@ -1,3 +1,4 @@
+
 const mazeElement = document.getElementById('maze');
 const size = 8;
 
@@ -93,7 +94,7 @@ function bfs(startX, startY, endX, endY) {
       }
     }
   }
-  
+
   const path = [];
   let curr = [endX, endY];
   while (curr && !(curr[0] === startX && curr[1] === startY)) {
@@ -104,10 +105,15 @@ function bfs(startX, startY, endX, endY) {
   return path.reverse();
 }
 
- function autoSolve() {
+// Make autoSolve globally accessible
+window.autoSolve = function() {
   hintPath = bfs(playerX, playerY, goalX, goalY);
-  let index = 0;
+  if (hintPath.length === 0) {
+    alert("Tidak ada jalur ke tujuan! Silakan generate ulang maze.");
+    return;
+  }
 
+  let index = 0;
   const interval = setInterval(() => {
     if (index >= hintPath.length) {
       clearInterval(interval);
@@ -119,6 +125,6 @@ function bfs(startX, startY, endX, endY) {
     drawMaze();
     index++;
   }, 300);
-}
+};
 
 generateNewMaze();
