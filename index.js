@@ -1,4 +1,3 @@
-
 const mazeElement = document.getElementById('maze');
 const size = 8;
 
@@ -8,16 +7,26 @@ let playerY = 0;
 const goalX = size - 1;
 const goalY = size - 1;
 let hintPath = [];
+let solvePath = [];
 
 function generateNewMaze() {
-  maze = Array.from({ length: size }, () =>
-    Array.from({ length: size }, () => (Math.random() < 0.3 ? 1 : 0))
-  );
-  maze[0][0] = 0; // Start
-  maze[goalY][goalX] = 0; // Goal
+  let valid = false;
+
+  while (!valid) {
+    maze = Array.from({ length: size }, () =>
+      Array.from({ length: size }, () => (Math.random() < 0.3 ? 1 : 0))
+    );
+    maze[0][0] = 0; // Start
+    maze[goalY][goalX] = 0; // Goal
+
+    const path = bfs(0, 0, goalX, goalY);
+    if (path.length > 0) valid = true;
+  }
+
   playerX = 0;
   playerY = 0;
   hintPath = [];
+  solvePath = [];
   drawMaze();
 }
 
@@ -32,7 +41,6 @@ function drawMaze() {
       if (maze[y][x] === 1) cell.classList.add('wall');
       else if (x === playerX && y === playerY) cell.classList.add('player');
       else if (hintPath.some(([hx, hy]) => hx === x && hy === y)) cell.classList.add('hint');
-
       mazeElement.appendChild(cell);
     }
   }
@@ -105,21 +113,20 @@ function bfs(startX, startY, endX, endY) {
   return path.reverse();
 }
 
-// Make autoSolve globally accessible
 window.autoSolve = function() {
-  hintPath = bfs(playerX, playerY, goalX, goalY);
-  if (hintPath.length === 0) {
+  solvePath = bfs(playerX, playerY, goalX, goalY);
+  if (solvePath.length === 0) {
     alert("Tidak ada jalur ke tujuan! Silakan generate ulang maze.");
     return;
   }
 
   let index = 0;
   const interval = setInterval(() => {
-    if (index >= hintPath.length) {
+    if (index >= solvePath.length) {
       clearInterval(interval);
       return;
     }
-    const [x, y] = hintPath[index];
+    const [x, y] = solvePath[index];
     playerX = x;
     playerY = y;
     drawMaze();
