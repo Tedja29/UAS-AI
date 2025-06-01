@@ -93,8 +93,18 @@ function bfs(startX, startY, endX, endY) {
       }
     }
   }
+  
+  const path = [];
+  let curr = [endX, endY];
+  while (curr && !(curr[0] === startX && curr[1] === startY)) {
+    path.push(curr);
+    curr = parent[curr[1]][curr[0]];
+  }
 
-  function autoSolve() {
+  return path.reverse();
+}
+
+ function autoSolve() {
   hintPath = bfs(playerX, playerY, goalX, goalY);
   let index = 0;
 
@@ -109,17 +119,6 @@ function bfs(startX, startY, endX, endY) {
     drawMaze();
     index++;
   }, 300);
-}
-
-
-  const path = [];
-  let curr = [endX, endY];
-  while (curr && !(curr[0] === startX && curr[1] === startY)) {
-    path.push(curr);
-    curr = parent[curr[1]][curr[0]];
-  }
-
-  return path.reverse();
 }
 
 generateNewMaze();
