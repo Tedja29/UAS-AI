@@ -1,0 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+#maze {
+  display: grid;
+  margin-top: 20px;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+
+.wall {
+  background-color: black;
+}
+
+.player {
+  background-color: green;
+}
+
+.hint {
+  background-color: yellow;
+}
